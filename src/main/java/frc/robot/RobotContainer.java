@@ -1,9 +1,8 @@
 // Copyright (c) 2021-2026 Littleton Robotics
 // http://github.com/Mechanical-Advantage
-//
+
 // Use of this source code is governed by a BSD
-// license that can be found in the LICENSE file
-// at the root directory of this project.
+// license that can be found in the LICENSE file at the root directory of this project.
 
 package frc.robot;
 
@@ -164,7 +163,7 @@ public class RobotContainer {
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
+   
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {

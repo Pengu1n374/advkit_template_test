@@ -1,9 +1,8 @@
 // Copyright (c) 2021-2026 Littleton Robotics
 // http://github.com/Mechanical-Advantage
-//
+
 // Use of this source code is governed by a BSD
-// license that can be found in the LICENSE file
-// at the root directory of this project.
+// license that can be found in the LICENSE file at the root directory of this project.
 
 package frc.robot.subsystems.drive;
 
@@ -38,8 +37,7 @@ import java.util.Queue;
 /**
  * Module IO implementation for Talon FXS drive motor controller, Talon FXS turn motor controller,
  * and CANdi (PWM 1). Configured using a set of module constants from Phoenix.
- *
- * <p>Device configuration and other behaviors not exposed by TunerConstants can be customized here.
+ * Device configuration and other behaviors not exposed by TunerConstants can be customized here.
  */
 public class ModuleIOTalonFXS implements ModuleIO {
   // Hardware objects
@@ -52,17 +50,17 @@ public class ModuleIOTalonFXS implements ModuleIO {
   private final PositionVoltage positionVoltageRequest = new PositionVoltage(0.0);
   private final VelocityVoltage velocityVoltageRequest = new VelocityVoltage(0.0);
 
-  // Timestamp inputs from Phoenix thread
+  // Timestamp inputs from the Phoenix thread
   private final Queue<Double> timestampQueue;
 
-  // Inputs from drive motor
+  // Inputs from the drive motor
   private final StatusSignal<Angle> drivePosition;
   private final Queue<Double> drivePositionQueue;
   private final StatusSignal<AngularVelocity> driveVelocity;
   private final StatusSignal<Voltage> driveAppliedVolts;
   private final StatusSignal<Current> driveCurrent;
 
-  // Inputs from turn motor
+  // Inputs from the turn motor
   private final StatusSignal<Angle> turnAbsolutePosition;
   private final StatusSignal<Angle> turnPosition;
   private final Queue<Double> turnPositionQueue;
@@ -70,7 +68,7 @@ public class ModuleIOTalonFXS implements ModuleIO {
   private final StatusSignal<Voltage> turnAppliedVolts;
   private final StatusSignal<Current> turnCurrent;
 
-  // Connection debouncers
+  // Connections to the debouncers
   private final Debouncer driveConnectedDebounce =
       new Debouncer(0.5, Debouncer.DebounceType.kFalling);
   private final Debouncer turnConnectedDebounce =
@@ -85,7 +83,7 @@ public class ModuleIOTalonFXS implements ModuleIO {
     turnTalon = new TalonFXS(constants.SteerMotorId, TunerConstants.kCANBus);
     candi = new CANdi(constants.EncoderId, TunerConstants.kCANBus);
 
-    // Configure drive motor
+    // Configures the drive motor
     var driveConfig = constants.DriveMotorInitialConfigs;
     driveConfig.Commutation.MotorArrangement =
         switch (constants.DriveMotorType) {
@@ -105,7 +103,7 @@ public class ModuleIOTalonFXS implements ModuleIO {
     tryUntilOk(5, () -> driveTalon.getConfigurator().apply(driveConfig, 0.25));
     tryUntilOk(5, () -> driveTalon.setPosition(0.0, 0.25));
 
-    // Configure turn motor
+    // Configures the turn motor
     var turnConfig = new TalonFXSConfiguration();
     turnConfig.Commutation.MotorArrangement =
         switch (constants.SteerMotorType) {
@@ -148,23 +146,23 @@ public class ModuleIOTalonFXS implements ModuleIO {
             : InvertedValue.CounterClockwise_Positive;
     tryUntilOk(5, () -> turnTalon.getConfigurator().apply(turnConfig, 0.25));
 
-    // Configure CANdi
+    // Configures the CANdi
     CANdiConfiguration candiConfig = constants.EncoderInitialConfigs;
     candiConfig.PWM1.AbsoluteSensorOffset = constants.EncoderOffset;
     candiConfig.PWM1.SensorDirection = constants.EncoderInverted;
     candi.getConfigurator().apply(candiConfig);
 
-    // Create timestamp queue
+    // Creates the timestamp queue
     timestampQueue = PhoenixOdometryThread.getInstance().makeTimestampQueue();
 
-    // Create drive status signals
+    // Creates the drive status signals
     drivePosition = driveTalon.getPosition();
     drivePositionQueue = PhoenixOdometryThread.getInstance().registerSignal(drivePosition.clone());
     driveVelocity = driveTalon.getVelocity();
     driveAppliedVolts = driveTalon.getMotorVoltage();
     driveCurrent = driveTalon.getStatorCurrent();
 
-    // Create turn status signals
+    // Creates the turn status signals
     turnAbsolutePosition = candi.getPWM1Position();
     turnPosition = turnTalon.getPosition();
     turnPositionQueue = PhoenixOdometryThread.getInstance().registerSignal(turnPosition.clone());
@@ -172,7 +170,7 @@ public class ModuleIOTalonFXS implements ModuleIO {
     turnAppliedVolts = turnTalon.getMotorVoltage();
     turnCurrent = turnTalon.getStatorCurrent();
 
-    // Configure periodic frames
+    // Configures the periodic frames
     BaseStatusSignal.setUpdateFrequencyForAll(
         Drive.ODOMETRY_FREQUENCY, drivePosition, turnPosition);
     BaseStatusSignal.setUpdateFrequencyForAll(
@@ -189,21 +187,21 @@ public class ModuleIOTalonFXS implements ModuleIO {
 
   @Override
   public void updateInputs(ModuleIOInputs inputs) {
-    // Refresh all signals
+    // Refreshes all signals
     var driveStatus =
         BaseStatusSignal.refreshAll(drivePosition, driveVelocity, driveAppliedVolts, driveCurrent);
     var turnStatus =
         BaseStatusSignal.refreshAll(turnPosition, turnVelocity, turnAppliedVolts, turnCurrent);
     var turnEncoderStatus = BaseStatusSignal.refreshAll(turnAbsolutePosition);
 
-    // Update drive inputs
+    // Updates all drive inputs
     inputs.driveConnected = driveConnectedDebounce.calculate(driveStatus.isOK());
     inputs.drivePositionRad = Units.rotationsToRadians(drivePosition.getValueAsDouble());
     inputs.driveVelocityRadPerSec = Units.rotationsToRadians(driveVelocity.getValueAsDouble());
     inputs.driveAppliedVolts = driveAppliedVolts.getValueAsDouble();
     inputs.driveCurrentAmps = driveCurrent.getValueAsDouble();
 
-    // Update turn inputs
+    // Updates all turn inputs
     inputs.turnConnected = turnConnectedDebounce.calculate(turnStatus.isOK());
     inputs.turnEncoderConnected = turnEncoderConnectedDebounce.calculate(turnEncoderStatus.isOK());
     inputs.turnAbsolutePosition = Rotation2d.fromRotations(turnAbsolutePosition.getValueAsDouble());
@@ -212,7 +210,7 @@ public class ModuleIOTalonFXS implements ModuleIO {
     inputs.turnAppliedVolts = turnAppliedVolts.getValueAsDouble();
     inputs.turnCurrentAmps = turnCurrent.getValueAsDouble();
 
-    // Update odometry inputs
+    // Updates all odometry inputs
     inputs.odometryTimestamps =
         timestampQueue.stream().mapToDouble((Double value) -> value).toArray();
     inputs.odometryDrivePositionsRad =

@@ -1,9 +1,8 @@
 // Copyright (c) 2021-2026 Littleton Robotics
 // http://github.com/Mechanical-Advantage
-//
+
 // Use of this source code is governed by a BSD
-// license that can be found in the LICENSE file
-// at the root directory of this project.
+// license that can be found in the LICENSE file at the root directory of this project.
 
 package frc.robot.subsystems.drive;
 
@@ -22,8 +21,8 @@ import java.util.function.DoubleSupplier;
 
 /**
  * Provides an interface for asynchronously reading high-frequency measurements to a set of queues.
- *
- * <p>This version is intended for Phoenix 6 devices on both the RIO and CANivore buses. When using
+
+ * This version is intended for Phoenix 6 devices on both the RIO and CANivore buses. When using
  * a CANivore, the thread uses the "waitForAll" blocking method to enable more consistent sampling.
  * This also allows Phoenix Pro users to benefit from lower latency between devices using CANivore
  * time synchronization.
@@ -113,7 +112,7 @@ public class PhoenixOdometryThread extends Thread {
         if (isCANFD && phoenixSignals.length > 0) {
           BaseStatusSignal.waitForAll(2.0 / Drive.ODOMETRY_FREQUENCY, phoenixSignals);
         } else {
-          // "waitForAll" does not support blocking on multiple signals with a bus
+          // the "waitForAll" command does not support blocking on multiple signals with a bus
           // that is not CAN FD, regardless of Pro licensing. No reasoning for this
           // behavior is provided by the documentation.
           Thread.sleep((long) (1000.0 / Drive.ODOMETRY_FREQUENCY));
