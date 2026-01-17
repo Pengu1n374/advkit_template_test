@@ -41,7 +41,7 @@ public class DriveCommands {
   private static final double WHEEL_RADIUS_RAMP_RATE = 0.05; // Rad/Sec^2
 
   private DriveCommands() {
-    // Put all DriveCommands in here
+    // Put all DriveCommands here
   }
 
   private static Translation2d getLinearVelocityFromJoysticks(double x, double y) {
@@ -153,7 +153,6 @@ public class DriveCommands {
 
   /**
    * Measures the velocity feedforward constants for the drive motors.
-   
    * This command should only be used in voltage control mode.
    */
   public static Command feedforwardCharacterization(Drive drive) {
