@@ -152,8 +152,8 @@ public class DriveCommands {
   }
 
   /**
-   * Measures the velocity feedforward constants for the drive motors.
-   * This command should only be used in voltage control mode.
+   * Measures the velocity feedforward constants for the drive motors. This command should only be
+   * used in voltage control mode.
    */
   public static Command feedforwardCharacterization(Drive drive) {
     List<Double> velocitySamples = new LinkedList<>();

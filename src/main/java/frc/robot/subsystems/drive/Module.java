@@ -28,9 +28,7 @@ public class Module {
   private final Alert driveDisconnectedAlert;
   private final Alert turnDisconnectedAlert;
   private final Alert turnEncoderDisconnectedAlert;
-  private SwerveModulePosition[] odometryPositions = new SwerveModulePosition[] {
-
-  };
+  private SwerveModulePosition[] odometryPositions = new SwerveModulePosition[] {};
 
   public Module(
       ModuleIO io,

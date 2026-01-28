@@ -36,8 +36,8 @@ import java.util.Queue;
 
 /**
  * Module IO implementation for Talon FXS drive motor controller, Talon FXS turn motor controller,
- * and CANdi (PWM 1). Configured using a set of module constants from Phoenix.
- * Device configuration and other behaviors not exposed by TunerConstants can be customized here.
+ * and CANdi (PWM 1). Configured using a set of module constants from Phoenix. Device configuration
+ * and other behaviors not exposed by TunerConstants can be customized here.
  */
 public class ModuleIOTalonFXS implements ModuleIO {
   // Hardware objects

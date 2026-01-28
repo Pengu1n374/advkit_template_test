@@ -19,7 +19,7 @@ import edu.wpi.first.units.measure.*;
 // import frc.robot.subsystems.drive.Drive;
 
 public class TunerConstants {
-    
+
   // Both sets of gains need to be tuned to your individual robot.
   // The steer motor uses any SwerveModule.SteerRequestType control request with the
   // output type specified by SwerveModuleConstants.SteerMotorClosedLoopOutput
@@ -237,7 +237,7 @@ public class TunerConstants {
               kInvertRightSide,
               kBackRightSteerMotorInverted,
               kBackRightEncoderInverted);
-    // TO-DO: Figure out what to do with this
+  // TO-DO: Figure out what to do with this
   /**
    * Creates a CommandSwerveDrivetrain instance. This should only be called once in your robot
    * program,.
@@ -252,10 +252,10 @@ public class TunerConstants {
   public static class TunerSwerveDrivetrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> {
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     
-     * This constructs the underlying hardware devices, so users should not construct the devices
+     *
+     * <p>This constructs the underlying hardware devices, so users should not construct the devices
      * themselves. If they need the devices, they can access them through getters in the classes.
-     
+     *
      * @param drivetrainConstants Drivetrain-wide constants for the swerve drive
      * @param modules Constants for each specific module
      */
@@ -266,13 +266,13 @@ public class TunerConstants {
 
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     
-     * This constructs the underlying hardware devices, so users should not construct the devices
+     *
+     * <p>This constructs the underlying hardware devices, so users should not construct the devices
      * themselves. If they need the devices, they can access them through getters in the classes.
-     
+     *
      * @param drivetrainConstants Drivetrain-wide constants for the swerve drive
      * @param odometryUpdateFrequency The frequency to run the odometry loop. If unspecified or set
-     * to 0 Hz, this is 250 Hz on CAN FD, and 100 Hz on CAN 2.0.
+     *     to 0 Hz, this is 250 Hz on CAN FD, and 100 Hz on CAN 2.0.
      * @param modules Constants for each specific module
      */
     public TunerSwerveDrivetrain(
@@ -290,17 +290,17 @@ public class TunerConstants {
 
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     
-     * This constructs the underlying hardware devices, so users should not construct the devices
+     *
+     * <p>This constructs the underlying hardware devices, so users should not construct the devices
      * themselves. If they need the devices, they can access them through getters in the classes.
-     
+     *
      * @param drivetrainConstants Drivetrain-wide constants for the swerve drive
      * @param odometryUpdateFrequency The frequency to run the odometry loop. If unspecified or set
-     * to 0 Hz, this is 250 Hz on CAN FD, and 100 Hz on CAN 2.0.
+     *     to 0 Hz, this is 250 Hz on CAN FD, and 100 Hz on CAN 2.0.
      * @param odometryStandardDeviation The standard deviation for odometry calculation in the form
-     * [x, y, theta]ᵀ, with units in meters and radians
+     *     [x, y, theta]ᵀ, with units in meters and radians
      * @param visionStandardDeviation The standard deviation for vision calculation in the form [x,
-     * y, theta]ᵀ, with units in meters and radians
+     *     y, theta]ᵀ, with units in meters and radians
      * @param modules Constants for each specific module
      */
     public TunerSwerveDrivetrain(
